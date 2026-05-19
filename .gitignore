@@ -41,28 +41,4 @@ yarn-error.log*
 next-env.d.ts
 
 claude/
-    claude.md
-    ```
-    *(Not: `claude/` ifadesi eğer bir klasörse içindeki her şeyi engeller, `claude.md` ise doğrudan o dosyayı engeller).*
-  
-  
-    Dosyalar zaten bir kere GitHub'a gittiği için Git'e "Artık bu dosyaları takip etmeyi bırak ama bilgisayarımdan silme" dememiz gerekiyor. Terminalde şu iki komutu sırayla çalıştır:
-    ```bash
-    git rm -r --cached claude
-    ```
-    ```bash
-    git rm --cached claude.md
-    ```
-  
-  
-    Yaptığımız bu engelleme ve hafıza temizleme işlemini yerel Git geçmişine kaydet:
-    ```bash
-    git add .
-    git commit -m "Claude dosya ve klasörleri takipten çıkarıldı"
-    ```
-  
-  
-    Son olarak bu değişikliği GitHub'a gönder:
-    ```bash
-    git push origin main
-    ```
+claude.md
