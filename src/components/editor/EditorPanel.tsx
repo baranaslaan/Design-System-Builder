@@ -4,6 +4,7 @@ import { useState, useEffect } from "react"
 import { AnimatePresence, motion } from "framer-motion"
 import { Search, X } from "lucide-react"
 import { useTokensStore } from "@/store/tokens"
+import { useT, type StringKey } from "@/lib/i18n"
 import { ColorsPanel } from "@/components/panels/ColorsPanel"
 import { TypographyPanel } from "@/components/panels/TypographyPanel"
 import { SpacingPanel } from "@/components/panels/SpacingPanel"
@@ -12,19 +13,21 @@ import { StrokePanel } from "@/components/panels/StrokePanel"
 import { ShadowPanel } from "@/components/panels/ShadowPanel"
 import { GradientsPanel } from "@/components/panels/GradientsPanel"
 
-const PANEL_TITLES: Record<string, string> = {
-  colors:     "Colors",
-  typography: "Typography",
-  spacing:    "Spacing",
-  radius:     "Border Radius",
-  stroke:     "Stroke Width",
-  shadow:     "Shadows",
-  gradient:   "Gradients",
+const PANEL_TITLE_KEYS: Record<string, StringKey> = {
+  colors:     "title_colors",
+  typography: "title_typography",
+  spacing:    "title_spacing",
+  radius:     "title_radius",
+  stroke:     "title_stroke",
+  shadow:     "title_shadow",
+  gradient:   "title_gradient",
 }
 
 export function EditorPanel() {
   const { activeCategory } = useTokensStore()
+  const t = useT()
   const [filter, setFilter] = useState("")
+  const title = t(PANEL_TITLE_KEYS[activeCategory])
 
   // Clear filter when switching categories
   useEffect(() => { setFilter("") }, [activeCategory])
@@ -51,7 +54,7 @@ export function EditorPanel() {
             exit={{ opacity: 0, y: -4 }}
             className="text-sm font-semibold text-[var(--foreground)] flex-shrink-0"
           >
-            {PANEL_TITLES[activeCategory]}
+            {title}
           </motion.h2>
         </AnimatePresence>
 
@@ -61,7 +64,7 @@ export function EditorPanel() {
           <input
             value={filter}
             onChange={e => setFilter(e.target.value)}
-            placeholder={`Filter ${PANEL_TITLES[activeCategory].toLowerCase()}…`}
+            placeholder={t("filter_placeholder", { category: title.toLowerCase() })}
             className="flex-1 bg-transparent text-xs text-[var(--foreground)] placeholder:text-[var(--muted)] focus:outline-none min-w-0"
           />
           <AnimatePresence>

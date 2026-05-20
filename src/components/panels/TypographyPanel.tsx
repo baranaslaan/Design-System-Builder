@@ -7,6 +7,7 @@ import { FontPicker } from "./FontPicker"
 import { loadFontFromFamily } from "@/lib/fontLoader"
 import { CopyBadge } from "@/components/ui/CopyBadge"
 import { EditableKey } from "@/components/ui/EditableKey"
+import { useT } from "@/lib/i18n"
 
 function SectionHeader({ children }: { children: React.ReactNode }) {
   return (
@@ -72,6 +73,7 @@ export function TypographyPanel({ filter = "" }: { filter?: string }) {
     updateFontSize, updateFontWeight, updateLineHeight, updateFontFamily,
     renameFontSize, renameFontWeight, renameLineHeight,
   } = useTokensStore()
+  const t = useT()
   const { typography } = tokens
   const q = filter.toLowerCase()
   const match = (k: string, v: string) => !q || k.includes(q) || v.toLowerCase().includes(q)
@@ -94,7 +96,7 @@ export function TypographyPanel({ filter = "" }: { filter?: string }) {
       {/* ── Type Scale visual ───────────────────────────────────── */}
       {!q && (
         <section>
-          <SectionHeader>Type Scale</SectionHeader>
+          <SectionHeader>{t("section_type_scale")}</SectionHeader>
           <div className="bg-[var(--surface-2)] rounded-2xl p-4 border border-[var(--border)] overflow-hidden">
             <div className="flex flex-col gap-1">
               {[...fontSizeKeys].reverse().map((key) => {
@@ -134,7 +136,7 @@ export function TypographyPanel({ filter = "" }: { filter?: string }) {
 
       {/* ── Font Families ────────────────────────────────────────── */}
       <section>
-        <SectionHeader>Font Families</SectionHeader>
+        <SectionHeader>{t("section_font_families")}</SectionHeader>
         <div className="flex flex-col gap-3">
           {(["sans", "serif", "mono"] as const)
             .filter(key => match(key, typography.fontFamilies[key]))
@@ -165,7 +167,7 @@ export function TypographyPanel({ filter = "" }: { filter?: string }) {
 
       {/* ── Font Sizes ───────────────────────────────────────────── */}
       <section>
-        <SectionHeader>Font Sizes</SectionHeader>
+        <SectionHeader>{t("section_font_sizes")}</SectionHeader>
         <div className="flex flex-col gap-0.5">
           {fontSizeKeys.filter(key => match(key, typography.fontSizes[key])).map((key) => (
             <TokenRow
@@ -194,7 +196,7 @@ export function TypographyPanel({ filter = "" }: { filter?: string }) {
 
       {/* ── Font Weights ─────────────────────────────────────────── */}
       <section>
-        <SectionHeader>Font Weights</SectionHeader>
+        <SectionHeader>{t("section_font_weights")}</SectionHeader>
         <div className="flex flex-col gap-0.5">
           {fontWeightKeys.filter(key => match(key, String(typography.fontWeights[key]))).map((key) => (
             <TokenRow
@@ -222,7 +224,7 @@ export function TypographyPanel({ filter = "" }: { filter?: string }) {
 
       {/* ── Line Heights ─────────────────────────────────────────── */}
       <section>
-        <SectionHeader>Line Heights</SectionHeader>
+        <SectionHeader>{t("section_line_heights")}</SectionHeader>
         <div className="flex flex-col gap-0.5">
           {lineHeightKeys.filter(key => match(key, typography.lineHeights[key])).map((key) => (
             <TokenRow

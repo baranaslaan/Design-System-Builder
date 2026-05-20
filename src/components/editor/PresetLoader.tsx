@@ -111,7 +111,7 @@ export function PresetLoader() {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 4, scale: 0.97 }}
               transition={{ duration: 0.15 }}
-              className="absolute top-full left-0 mt-2 z-30 w-80 bg-[var(--surface)] border border-[var(--border)] rounded-2xl shadow-2xl overflow-hidden"
+              className="absolute top-full right-0 mt-2 mr-1 z-30 w-80 bg-[var(--surface)] border border-[var(--border)] rounded-2xl shadow-2xl overflow-hidden"
             >
               {/* ── Built-in presets ─────────────────────────── */}
               <div className="px-3 pt-3 pb-1">

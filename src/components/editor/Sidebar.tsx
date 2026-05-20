@@ -5,48 +5,49 @@ import {
   Palette, Type, Space, Circle, Minus, BoxSelect, Layers, Blend
 } from "lucide-react"
 import { useTokensStore } from "@/store/tokens"
+import { useT, type StringKey } from "@/lib/i18n"
 import type { TokenCategory } from "@/types/tokens"
 
-const CATEGORIES: { key: TokenCategory; label: string; icon: React.ReactNode; count: (s: ReturnType<typeof useTokensStore.getState>["tokens"]) => number }[] = [
+const CATEGORIES: { key: TokenCategory; labelKey: StringKey; icon: React.ReactNode; count: (s: ReturnType<typeof useTokensStore.getState>["tokens"]) => number }[] = [
   {
     key: "colors",
-    label: "Colors",
+    labelKey: "cat_colors",
     icon: <Palette size={15} />,
     count: (t) => t.colors.palettes.length + t.colors.semantic.length,
   },
   {
     key: "typography",
-    label: "Typography",
+    labelKey: "cat_typography",
     icon: <Type size={15} />,
     count: (t) => Object.keys(t.typography.fontSizes).length,
   },
   {
     key: "spacing",
-    label: "Spacing",
+    labelKey: "cat_spacing",
     icon: <Space size={15} />,
     count: (t) => Object.keys(t.spacing).length,
   },
   {
     key: "radius",
-    label: "Radius",
+    labelKey: "cat_radius",
     icon: <Circle size={15} />,
     count: (t) => Object.keys(t.radius).length,
   },
   {
     key: "stroke",
-    label: "Stroke",
+    labelKey: "cat_stroke",
     icon: <Minus size={15} />,
     count: (t) => Object.keys(t.stroke).length,
   },
   {
     key: "shadow",
-    label: "Shadows",
+    labelKey: "cat_shadows",
     icon: <BoxSelect size={15} />,
     count: (t) => t.shadows.length,
   },
   {
     key: "gradient",
-    label: "Gradients",
+    labelKey: "cat_gradients",
     icon: <Blend size={15} />,
     count: (t) => t.gradients?.length ?? 0,
   },
@@ -54,10 +55,12 @@ const CATEGORIES: { key: TokenCategory; label: string; icon: React.ReactNode; co
 
 export function Sidebar() {
   const { activeCategory, setActiveCategory, tokens } = useTokensStore()
+  const t = useT()
 
   return (
     <nav className="w-52 flex-shrink-0 flex flex-col gap-0.5 py-4 px-2 border-r border-[var(--border)]">
-      {CATEGORIES.map(({ key, label, icon, count }) => {
+      {CATEGORIES.map(({ key, labelKey, icon, count }) => {
+        const label = t(labelKey)
         const isActive = activeCategory === key
         return (
           <button

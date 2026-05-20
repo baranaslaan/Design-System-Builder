@@ -34,6 +34,12 @@ interface TokensState {
   customPresets: CustomPreset[]
   undoStack: DesignTokens[]
   redoStack: DesignTokens[]
+  hasSeenOnboarding: boolean
+  previewWidth: number | null  // null = follow breakpoint default
+  language: "en" | "tr"
+  setHasSeenOnboarding: (v: boolean) => void
+  setPreviewWidth: (w: number | null) => void
+  setLanguage: (lang: "en" | "tr") => void
 
   setActiveCategory: (cat: TokenCategory) => void
   setPreviewMode: (mode: PreviewMode) => void
@@ -113,10 +119,16 @@ export const useTokensStore = create<TokensState>()(
       customPresets: [],
       undoStack: [],
       redoStack: [],
+      hasSeenOnboarding: false,
+      previewWidth: null,
+      language: "en",
 
       setActiveCategory: (cat) => set({ activeCategory: cat }),
       setPreviewMode: (mode) => set({ previewMode: mode }),
       setAppTheme: (theme) => set({ appTheme: theme }),
+      setHasSeenOnboarding: (v) => set({ hasSeenOnboarding: v }),
+      setPreviewWidth: (w) => set({ previewWidth: w }),
+      setLanguage: (lang) => set({ language: lang }),
 
       undo: () => set((s) => {
         if (s.undoStack.length === 0) return {}

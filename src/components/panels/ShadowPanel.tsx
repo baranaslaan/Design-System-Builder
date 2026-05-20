@@ -5,9 +5,11 @@ import { Trash2, Plus } from "lucide-react"
 import { useTokensStore } from "@/store/tokens"
 import { Button } from "@/components/ui/button"
 import { CopyBadge } from "@/components/ui/CopyBadge"
+import { useT } from "@/lib/i18n"
 
 export function ShadowPanel({ filter = "" }: { filter?: string }) {
   const { tokens, updateShadow, addShadow, removeShadow } = useTokensStore()
+  const t = useT()
   const q = filter.toLowerCase()
   const visible = tokens.shadows.filter(s => !q || s.name.toLowerCase().includes(q) || s.id.includes(q) || s.value.includes(q))
 
@@ -69,7 +71,7 @@ export function ShadowPanel({ filter = "" }: { filter?: string }) {
       </AnimatePresence>
 
       <Button variant="ghost" size="sm" onClick={handleAdd} className="w-full justify-start gap-2 text-[var(--muted)]">
-        <Plus size={13} /> Add shadow
+        <Plus size={13} /> {t("btn_add_shadow")}
       </Button>
     </div>
   )

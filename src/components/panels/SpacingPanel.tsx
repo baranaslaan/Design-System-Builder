@@ -7,9 +7,11 @@ import { useTokensStore } from "@/store/tokens"
 import { CopyBadge } from "@/components/ui/CopyBadge"
 import { EditableKey } from "@/components/ui/EditableKey"
 import { Button } from "@/components/ui/button"
+import { useT } from "@/lib/i18n"
 
 export function SpacingPanel({ filter = "" }: { filter?: string }) {
   const { tokens, updateSpacing, renameSpacing, addSpacing, removeSpacing } = useTokensStore()
+  const t = useT()
   const [adding, setAdding] = useState(false)
   const [newKey, setNewKey] = useState("")
   const [newValue, setNewValue] = useState("16px")
@@ -37,9 +39,9 @@ export function SpacingPanel({ filter = "" }: { filter?: string }) {
   return (
     <div className="flex flex-col gap-1">
       <div className="flex items-center px-3 mb-1">
-        <span className="text-xs font-semibold text-[var(--muted)] uppercase tracking-wider w-28">Key</span>
-        <span className="flex-1 text-xs font-semibold text-[var(--muted)] uppercase tracking-wider">Visual</span>
-        <span className="text-xs font-semibold text-[var(--muted)] uppercase tracking-wider">Value</span>
+        <span className="text-xs font-semibold text-[var(--muted)] uppercase tracking-wider w-28">{t("col_key")}</span>
+        <span className="flex-1 text-xs font-semibold text-[var(--muted)] uppercase tracking-wider">{t("col_visual")}</span>
+        <span className="text-xs font-semibold text-[var(--muted)] uppercase tracking-wider">{t("col_value")}</span>
       </div>
 
       <AnimatePresence initial={false}>
@@ -78,7 +80,7 @@ export function SpacingPanel({ filter = "" }: { filter?: string }) {
               <button
                 className="opacity-0 group-hover:opacity-100 transition-opacity text-[var(--muted)] hover:text-red-400 shrink-0"
                 onClick={() => removeSpacing(key)}
-                title="Remove token"
+                title={t("btn_remove")}
               >
                 <Trash2 size={13} />
               </button>
@@ -110,8 +112,8 @@ export function SpacingPanel({ filter = "" }: { filter?: string }) {
               onChange={(e) => setNewValue(e.target.value)}
               onKeyDown={(e) => { if (e.key === "Enter") handleAdd(); if (e.key === "Escape") setAdding(false) }}
             />
-            <Button size="sm" className="h-7 px-3 text-xs" onClick={handleAdd}>Add</Button>
-            <Button size="sm" variant="ghost" className="h-7 px-2 text-xs" onClick={() => setAdding(false)}>Cancel</Button>
+            <Button size="sm" className="h-7 px-3 text-xs" onClick={handleAdd}>{t("btn_add")}</Button>
+            <Button size="sm" variant="ghost" className="h-7 px-2 text-xs" onClick={() => setAdding(false)}>{t("btn_cancel")}</Button>
           </motion.div>
         )}
       </AnimatePresence>
@@ -122,7 +124,7 @@ export function SpacingPanel({ filter = "" }: { filter?: string }) {
         onClick={() => setAdding(true)}
         className="mt-1 w-full justify-start gap-2 text-[var(--muted)]"
       >
-        <Plus size={13} /> Add spacing token
+        <Plus size={13} /> {t("btn_add_spacing")}
       </Button>
     </div>
   )

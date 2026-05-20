@@ -1,0 +1,260 @@
+export const STRINGS = {
+  en: {
+    // ── Topbar ──────────────────────────────────────────────
+    app_name: "Tokens",
+    search_placeholder: "Search tokens, presets, shadows…",
+    search_kbd: "⌘K",
+    tooltip_light_mode: "Switch to light mode",
+    tooltip_dark_mode: "Switch to dark mode",
+    tooltip_undo: "Undo (⌘Z)",
+    tooltip_redo: "Redo (⌘⇧Z)",
+    tooltip_history: "History",
+    tooltip_help: "Help & shortcuts (?)",
+    tooltip_hide_preview: "Hide preview",
+    tooltip_show_preview: "Show preview",
+    tooltip_lang_toggle: "Switch language",
+    btn_export: "Export",
+
+    // ── Sidebar categories ──────────────────────────────────
+    cat_colors: "Colors",
+    cat_typography: "Typography",
+    cat_spacing: "Spacing",
+    cat_radius: "Radius",
+    cat_stroke: "Stroke",
+    cat_shadows: "Shadows",
+    cat_gradients: "Gradients",
+
+    // ── Editor panel titles ─────────────────────────────────
+    title_colors: "Colors",
+    title_typography: "Typography",
+    title_spacing: "Spacing",
+    title_radius: "Border Radius",
+    title_stroke: "Stroke",
+    title_shadow: "Shadows",
+    title_gradient: "Gradients",
+    filter_placeholder: "Filter {category}…",
+
+    // ── Color panel ─────────────────────────────────────────
+    tab_palettes: "Palettes",
+    tab_semantic: "Semantic",
+    btn_add_palette: "Add palette",
+    btn_add_semantic: "Add semantic color",
+    legend_light: "Light",
+    legend_dark: "Dark",
+    legend_token: "Token",
+    legend_contrast: "Contrast",
+    palette_base_label: "Base",
+    palette_base_title: "Edit base color — regenerates all shades",
+
+    // ── Spacing/Radius/Stroke panel ─────────────────────────
+    btn_add_spacing: "Add spacing token",
+    btn_add_radius: "Add radius token",
+    btn_add_stroke: "Add stroke token",
+    btn_add_shadow: "Add shadow",
+    btn_add_gradient: "Add gradient",
+    col_key: "Key",
+    col_visual: "Visual",
+    col_value: "Value",
+    btn_add: "Add",
+    btn_cancel: "Cancel",
+    btn_remove: "Remove token",
+
+    // ── Typography panel ────────────────────────────────────
+    section_type_scale: "Type Scale",
+    section_font_families: "Font Families",
+    section_font_sizes: "Font Sizes",
+    section_font_weights: "Font Weights",
+    section_line_heights: "Line Heights",
+
+    // ── History panel ───────────────────────────────────────
+    history_title: "Version History",
+    history_save: "Save snapshot",
+    history_empty: "No history yet",
+    history_empty_desc: "Changes are auto-saved when you load a preset or import JSON.",
+    history_compare_against: "Compare against",
+    history_current: "Current state",
+    history_diff: "Diff",
+    history_restore: "Restore",
+
+    // ── Diff modal ──────────────────────────────────────────
+    diff_title: "Token Diff",
+    diff_changes: "{n} changes",
+    diff_added: "{n} added",
+    diff_removed: "{n} removed",
+    diff_changed: "{n} changed",
+    diff_no_differences: "No differences",
+    diff_identical: "These two versions are identical.",
+
+    // ── Export modal ────────────────────────────────────────
+    export_title: "Export Tokens",
+    export_format: "Format",
+    export_section: "Section",
+    export_all: "All",
+    export_copy: "Copy",
+    export_download: "Download",
+    export_download_all: "Download all formats",
+
+    // ── Help center ─────────────────────────────────────────
+    help_title: "Help Center",
+    help_subtitle: "Quick tour, features, shortcuts & tips",
+    help_tab_tour: "Quick Tour",
+    help_tab_features: "Features",
+    help_tab_shortcuts: "Shortcuts",
+    help_tab_tips: "Tips & Tricks",
+    help_prev: "Previous",
+    help_next: "Next",
+    help_start: "Let's start",
+
+    // Tour steps
+    tour_step1_title: "Welcome to Design System Builder",
+    tour_step1_desc: "Edit your tokens live, switch between presets, see instant preview. All changes auto-save.",
+    tour_step2_title: "Sidebar — Token Categories",
+    tour_step2_desc: "Navigate between Colors, Typography, Spacing, Radius, Stroke, Shadow and Gradient panels. Inline editing in every panel.",
+    tour_step3_title: "Preview Panel",
+    tour_step3_desc: "Real components on the right — Buttons, Cards, Forms, Tables, Navigation. Light/Dark toggle, breakpoint switcher and now a resize handle for custom width.",
+    tour_step4_title: "Export & Diff",
+    tour_step4_desc: "Export your tokens as CSS, SCSS, Tailwind, Style Dictionary or Figma Tokens. Diff against history or different presets.",
+    tour_step5_title: "You're ready!",
+    tour_step5_desc: "Cmd+K to search, Cmd+Z to undo, click the pencil to rename tokens. Reopen this guide anytime from the (?) icon in the top right.",
+
+    // ── Preview ─────────────────────────────────────────────
+    preview_label: "Preview",
+    preview_tooltip_min_max: "min {min}px • max {max}px",
+
+    // ── Common ──────────────────────────────────────────────
+    common_yes: "Yes",
+    common_no: "No",
+    common_close: "Close",
+  },
+
+  tr: {
+    // ── Topbar ──────────────────────────────────────────────
+    app_name: "Tokens",
+    search_placeholder: "Token, preset ve shadow ara…",
+    search_kbd: "⌘K",
+    tooltip_light_mode: "Açık moda geç",
+    tooltip_dark_mode: "Koyu moda geç",
+    tooltip_undo: "Geri al (⌘Z)",
+    tooltip_redo: "İleri al (⌘⇧Z)",
+    tooltip_history: "Geçmiş",
+    tooltip_help: "Yardım & kısayollar (?)",
+    tooltip_hide_preview: "Önizlemeyi gizle",
+    tooltip_show_preview: "Önizlemeyi göster",
+    tooltip_lang_toggle: "Dil değiştir",
+    btn_export: "Dışa Aktar",
+
+    // ── Sidebar categories ──────────────────────────────────
+    cat_colors: "Renkler",
+    cat_typography: "Tipografi",
+    cat_spacing: "Boşluklar",
+    cat_radius: "Köşeler",
+    cat_stroke: "Çizgi",
+    cat_shadows: "Gölgeler",
+    cat_gradients: "Gradyanlar",
+
+    // ── Editor panel titles ─────────────────────────────────
+    title_colors: "Renkler",
+    title_typography: "Tipografi",
+    title_spacing: "Boşluklar",
+    title_radius: "Köşe Yuvarlama",
+    title_stroke: "Çizgi Kalınlığı",
+    title_shadow: "Gölgeler",
+    title_gradient: "Gradyanlar",
+    filter_placeholder: "{category} filtrele…",
+
+    // ── Color panel ─────────────────────────────────────────
+    tab_palettes: "Paletler",
+    tab_semantic: "Semantik",
+    btn_add_palette: "Palet ekle",
+    btn_add_semantic: "Semantik renk ekle",
+    legend_light: "Açık",
+    legend_dark: "Koyu",
+    legend_token: "Token",
+    legend_contrast: "Kontrast",
+    palette_base_label: "Ana",
+    palette_base_title: "Ana rengi düzenle — tüm tonlar yeniden üretilir",
+
+    // ── Spacing/Radius/Stroke panel ─────────────────────────
+    btn_add_spacing: "Spacing token ekle",
+    btn_add_radius: "Radius token ekle",
+    btn_add_stroke: "Stroke token ekle",
+    btn_add_shadow: "Gölge ekle",
+    btn_add_gradient: "Gradyan ekle",
+    col_key: "Anahtar",
+    col_visual: "Görsel",
+    col_value: "Değer",
+    btn_add: "Ekle",
+    btn_cancel: "İptal",
+    btn_remove: "Token sil",
+
+    // ── Typography panel ────────────────────────────────────
+    section_type_scale: "Tipografi Ölçeği",
+    section_font_families: "Font Aileleri",
+    section_font_sizes: "Font Boyutları",
+    section_font_weights: "Font Ağırlıkları",
+    section_line_heights: "Satır Yükseklikleri",
+
+    // ── History panel ───────────────────────────────────────
+    history_title: "Versiyon Geçmişi",
+    history_save: "Snapshot kaydet",
+    history_empty: "Henüz geçmiş yok",
+    history_empty_desc: "Preset yüklediğinde veya JSON içe aktardığında değişiklikler otomatik kaydedilir.",
+    history_compare_against: "Şununla karşılaştır",
+    history_current: "Mevcut durum",
+    history_diff: "Fark",
+    history_restore: "Geri yükle",
+
+    // ── Diff modal ──────────────────────────────────────────
+    diff_title: "Token Farkı",
+    diff_changes: "{n} değişiklik",
+    diff_added: "{n} eklendi",
+    diff_removed: "{n} silindi",
+    diff_changed: "{n} değişti",
+    diff_no_differences: "Fark yok",
+    diff_identical: "İki versiyon birebir aynı.",
+
+    // ── Export modal ────────────────────────────────────────
+    export_title: "Token'ları Dışa Aktar",
+    export_format: "Format",
+    export_section: "Bölüm",
+    export_all: "Tümü",
+    export_copy: "Kopyala",
+    export_download: "İndir",
+    export_download_all: "Tüm formatları indir",
+
+    // ── Help center ─────────────────────────────────────────
+    help_title: "Yardım Merkezi",
+    help_subtitle: "Hızlı tur, özellikler, kısayollar ve ipuçları",
+    help_tab_tour: "Hızlı Tur",
+    help_tab_features: "Özellikler",
+    help_tab_shortcuts: "Kısayollar",
+    help_tab_tips: "İpuçları",
+    help_prev: "Önceki",
+    help_next: "Sonraki",
+    help_start: "Başlayalım",
+
+    // Tour steps
+    tour_step1_title: "Design System Builder'a Hoş Geldin",
+    tour_step1_desc: "Token'larını canlı olarak düzenle, presetler arasında geçiş yap, anında önizleme gör. Tüm değişiklikler otomatik kaydedilir.",
+    tour_step2_title: "Sidebar — Token Kategorileri",
+    tour_step2_desc: "Sol kenardan Renkler, Tipografi, Boşluklar, Köşeler, Çizgiler, Gölgeler ve Gradyan panellerine geç. Her panelde inline düzenleme yapabilirsin.",
+    tour_step3_title: "Önizleme Paneli",
+    tour_step3_desc: "Sağ tarafta gerçek bileşenler — Buttons, Cards, Forms, Tables, Navigation. Açık/Koyu mod toggle'ı, breakpoint switcher ve şimdi resize handle ile genişlik ayarı.",
+    tour_step4_title: "Dışa Aktarma ve Fark",
+    tour_step4_desc: "Token'larını CSS, SCSS, Tailwind, Style Dictionary veya Figma Tokens formatında dışa aktar. History panelinden geçmiş veya farklı presetlerle diff al.",
+    tour_step5_title: "Hazırsın!",
+    tour_step5_desc: "Cmd+K ile arama yap, Cmd+Z ile geri al, ⌘+Click ile token'ları rename et. İstediğin zaman bu rehberi sağ üst köşedeki (?) ikonundan tekrar açabilirsin.",
+
+    // ── Preview ─────────────────────────────────────────────
+    preview_label: "Önizleme",
+    preview_tooltip_min_max: "min {min}px • max {max}px",
+
+    // ── Common ──────────────────────────────────────────────
+    common_yes: "Evet",
+    common_no: "Hayır",
+    common_close: "Kapat",
+  },
+} as const
+
+export type StringKey = keyof typeof STRINGS["en"]
+export type Lang = "en" | "tr"

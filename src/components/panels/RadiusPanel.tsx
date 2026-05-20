@@ -7,9 +7,11 @@ import { useTokensStore } from "@/store/tokens"
 import { CopyBadge } from "@/components/ui/CopyBadge"
 import { EditableKey } from "@/components/ui/EditableKey"
 import { Button } from "@/components/ui/button"
+import { useT } from "@/lib/i18n"
 
 export function RadiusPanel({ filter = "" }: { filter?: string }) {
   const { tokens, updateRadius, renameRadius, addRadius, removeRadius } = useTokensStore()
+  const t = useT()
   const [adding, setAdding] = useState(false)
   const [newKey, setNewKey] = useState("")
   const [newValue, setNewValue] = useState("8px")
@@ -46,7 +48,7 @@ export function RadiusPanel({ filter = "" }: { filter?: string }) {
                 <button
                   className="absolute top-2 right-2 opacity-0 group-hover/card:opacity-100 transition-opacity text-[var(--muted)] hover:text-red-400"
                   onClick={() => removeRadius(key)}
-                  title="Remove token"
+                  title={t("btn_remove")}
                 >
                   <Trash2 size={11} />
                 </button>
@@ -98,8 +100,8 @@ export function RadiusPanel({ filter = "" }: { filter?: string }) {
               onChange={(e) => setNewValue(e.target.value)}
               onKeyDown={(e) => { if (e.key === "Enter") handleAdd(); if (e.key === "Escape") setAdding(false) }}
             />
-            <Button size="sm" className="h-7 px-3 text-xs" onClick={handleAdd}>Add</Button>
-            <Button size="sm" variant="ghost" className="h-7 px-2 text-xs" onClick={() => setAdding(false)}>Cancel</Button>
+            <Button size="sm" className="h-7 px-3 text-xs" onClick={handleAdd}>{t("btn_add")}</Button>
+            <Button size="sm" variant="ghost" className="h-7 px-2 text-xs" onClick={() => setAdding(false)}>{t("btn_cancel")}</Button>
           </motion.div>
         )}
       </AnimatePresence>
@@ -110,7 +112,7 @@ export function RadiusPanel({ filter = "" }: { filter?: string }) {
         onClick={() => setAdding(true)}
         className="w-full justify-start gap-2 text-[var(--muted)]"
       >
-        <Plus size={13} /> Add radius token
+        <Plus size={13} /> {t("btn_add_radius")}
       </Button>
     </div>
   )

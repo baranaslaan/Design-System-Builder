@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion"
 import { X, Plus, Minus, ArrowRight, GitCompare } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { diffTokens, diffSummary, type DiffGroup } from "@/lib/diff"
+import { useT } from "@/lib/i18n"
 import type { DesignTokens } from "@/types/tokens"
 
 function shortKey(key: string) {
@@ -94,6 +95,7 @@ export function TokenDiffModal({
   beforeLabel,
   afterLabel,
 }: TokenDiffModalProps) {
+  const t = useT()
   const groups = useMemo(() => diffTokens(before, after), [before, after])
   const summary = useMemo(() => diffSummary(groups), [groups])
 
@@ -120,7 +122,7 @@ export function TokenDiffModal({
             <div className="flex items-center gap-3 px-5 py-4 border-b border-[var(--border)] flex-shrink-0">
               <GitCompare size={16} className="text-[var(--accent)]" />
               <div className="flex-1 min-w-0">
-                <div className="text-sm font-semibold text-[var(--foreground)]">Token Diff</div>
+                <div className="text-sm font-semibold text-[var(--foreground)]">{t("diff_title")}</div>
                 <div className="flex items-center gap-1.5 mt-0.5">
                   <span className="text-[10px] font-mono text-red-400 truncate max-w-[140px]">{beforeLabel}</span>
                   <ArrowRight size={9} className="text-[var(--muted)] flex-shrink-0" />
@@ -135,21 +137,21 @@ export function TokenDiffModal({
             {/* Summary bar */}
             {summary.total > 0 && (
               <div className="flex items-center gap-4 px-5 py-2.5 border-b border-[var(--border)] bg-[var(--surface-2)] flex-shrink-0">
-                <span className="text-xs text-[var(--muted)]">{summary.total} changes</span>
+                <span className="text-xs text-[var(--muted)]">{t("diff_changes", { n: summary.total })}</span>
                 <div className="flex items-center gap-3 ml-auto">
                   {summary.added > 0 && (
                     <span className="flex items-center gap-1 text-xs text-emerald-400">
-                      <Plus size={11} /> {summary.added} added
+                      <Plus size={11} /> {t("diff_added", { n: summary.added })}
                     </span>
                   )}
                   {summary.removed > 0 && (
                     <span className="flex items-center gap-1 text-xs text-red-400">
-                      <Minus size={11} /> {summary.removed} removed
+                      <Minus size={11} /> {t("diff_removed", { n: summary.removed })}
                     </span>
                   )}
                   {summary.changed > 0 && (
                     <span className="flex items-center gap-1 text-xs text-amber-400">
-                      <ArrowRight size={11} /> {summary.changed} changed
+                      <ArrowRight size={11} /> {t("diff_changed", { n: summary.changed })}
                     </span>
                   )}
                 </div>
@@ -164,8 +166,8 @@ export function TokenDiffModal({
                     <GitCompare size={20} className="text-[var(--muted)]" />
                   </div>
                   <div>
-                    <div className="text-sm font-medium text-[var(--foreground)]">No differences</div>
-                    <div className="text-xs text-[var(--muted)] mt-1">These two versions are identical.</div>
+                    <div className="text-sm font-medium text-[var(--foreground)]">{t("diff_no_differences")}</div>
+                    <div className="text-xs text-[var(--muted)] mt-1">{t("diff_identical")}</div>
                   </div>
                 </div>
               ) : (

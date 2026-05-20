@@ -7,6 +7,7 @@ import { useTokensStore } from "@/store/tokens"
 import { Button } from "@/components/ui/button"
 import { TokenDiffModal } from "./TokenDiffModal"
 import { PRESETS } from "@/data/presets"
+import { useT } from "@/lib/i18n"
 import type { DesignTokens } from "@/types/tokens"
 
 interface HistoryPanelProps {
@@ -27,6 +28,7 @@ function formatRelative(timestamp: number): string {
 
 export function HistoryPanel({ open, onClose }: HistoryPanelProps) {
   const { history, restoreHistory, clearHistory, pushHistory, tokens, customPresets } = useTokensStore()
+  const t = useT()
 
   const [diff, setDiff] = useState<{
     before: DesignTokens
@@ -38,7 +40,7 @@ export function HistoryPanel({ open, onClose }: HistoryPanelProps) {
   const [compareTarget, setCompareTarget] = useState<string>("current")
 
   const compareOptions = [
-    { value: "current", label: "Current state" },
+    { value: "current", label: t("history_current") },
     ...Object.entries(PRESETS).map(([k, v]) => ({ value: `preset:${k}`, label: `Preset: ${v.name}` })),
     ...customPresets.map((p) => ({ value: `custom:${p.id}`, label: `Saved: ${p.name}` })),
   ]
@@ -95,7 +97,7 @@ export function HistoryPanel({ open, onClose }: HistoryPanelProps) {
               <div className="flex items-center justify-between px-4 py-3.5 border-b border-[var(--border)]">
                 <div className="flex items-center gap-2">
                   <Clock size={14} className="text-[var(--accent)]" />
-                  <span className="text-sm font-semibold text-[var(--foreground)]">Version History</span>
+                  <span className="text-sm font-semibold text-[var(--foreground)]">{t("history_title")}</span>
                   {history.length > 0 && (
                     <span className="text-[10px] font-mono bg-[var(--surface-3)] text-[var(--muted)] px-1.5 py-0.5 rounded-full">
                       {history.length}
@@ -115,7 +117,7 @@ export function HistoryPanel({ open, onClose }: HistoryPanelProps) {
                   className="flex-1 gap-1.5 text-xs"
                   onClick={() => pushHistory("Manual snapshot")}
                 >
-                  <Camera size={12} /> Save snapshot
+                  <Camera size={12} /> {t("history_save")}
                 </Button>
                 {history.length > 0 && (
                   <Button
@@ -135,7 +137,7 @@ export function HistoryPanel({ open, onClose }: HistoryPanelProps) {
                   <div className="flex items-center gap-2 mb-1.5">
                     <GitCompare size={11} className="text-[var(--accent)]" />
                     <span className="text-[10px] font-semibold text-[var(--muted)] uppercase tracking-wider">
-                      Compare against
+                      {t("history_compare_against")}
                     </span>
                   </div>
                   <div className="relative">
@@ -161,8 +163,8 @@ export function HistoryPanel({ open, onClose }: HistoryPanelProps) {
                       <Clock size={18} className="text-[var(--muted)]" />
                     </div>
                     <div>
-                      <div className="text-sm font-medium text-[var(--foreground)]">No history yet</div>
-                      <div className="text-xs text-[var(--muted)] mt-1">Changes are auto-saved when you load a preset or import JSON.</div>
+                      <div className="text-sm font-medium text-[var(--foreground)]">{t("history_empty")}</div>
+                      <div className="text-xs text-[var(--muted)] mt-1">{t("history_empty_desc")}</div>
                     </div>
                   </div>
                 ) : (
@@ -193,7 +195,7 @@ export function HistoryPanel({ open, onClose }: HistoryPanelProps) {
                               onClick={() => openDiff(entry.tokens, entry.label)}
                               title="Compare this snapshot"
                             >
-                              <GitCompare size={10} /> Diff
+                              <GitCompare size={10} /> {t("history_diff")}
                             </button>
                             <span className="text-[var(--border)]">·</span>
                             <button
@@ -201,7 +203,7 @@ export function HistoryPanel({ open, onClose }: HistoryPanelProps) {
                               onClick={() => { restoreHistory(entry.id); onClose() }}
                               title="Restore this version"
                             >
-                              <RotateCcw size={10} /> Restore
+                              <RotateCcw size={10} /> {t("history_restore")}
                             </button>
                           </div>
                         </div>

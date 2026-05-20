@@ -10,10 +10,13 @@ import { Tooltip } from "@/components/ui/tooltip"
 import { PresetLoader } from "./PresetLoader"
 import { ExportModal } from "./ExportModal"
 import { HistoryPanel } from "./HistoryPanel"
+import { LanguageToggle } from "@/components/ui/LanguageToggle"
+import { useT } from "@/lib/i18n"
 
-interface TopbarProps { onSearchOpen?: () => void }
+interface TopbarProps { onSearchOpen?: () => void; onHelpOpen?: () => void }
 
-export function Topbar({ onSearchOpen }: TopbarProps) {
+export function Topbar({ onSearchOpen, onHelpOpen: _onHelpOpen }: TopbarProps) {
+  const t = useT()
   const { tokens, updateName, history, undoStack, redoStack, undo, redo, appTheme, setAppTheme } = useTokensStore()
   const [exportOpen, setExportOpen] = useState(false)
   const [historyOpen, setHistoryOpen] = useState(false)
@@ -53,7 +56,7 @@ export function Topbar({ onSearchOpen }: TopbarProps) {
           >
             <Sparkles size={13} color="white" />
           </motion.div>
-          <span className="text-sm font-bold text-[var(--foreground)] hidden sm:block">Tokens</span>
+          <span className="text-sm font-bold text-[var(--foreground)] hidden sm:block">{t("app_name")}</span>
         </div>
 
         <div className="h-5 w-px bg-[var(--border)]" />
@@ -84,24 +87,25 @@ export function Topbar({ onSearchOpen }: TopbarProps) {
           )}
         </div>
 
+        {/* Centered search bar — pinned to viewport center, not flex layout */}
+        <motion.button
+          onClick={onSearchOpen}
+          whileHover={{ scale: 1.01 }}
+          whileTap={{ scale: 0.99 }}
+          className="absolute left-1/2 -translate-x-1/2 hidden md:flex items-center gap-2.5 h-8 px-3 w-[300px] bg-[var(--surface-2)] hover:bg-[var(--surface-3)] border border-[var(--border)] hover:border-[var(--accent)] rounded-lg transition-colors text-[var(--muted)] hover:text-[var(--foreground)] group"
+        >
+          <Search size={13} className="flex-shrink-0 group-hover:text-[var(--accent)] transition-colors" />
+          <span className="text-xs flex-1 text-left">{t("search_placeholder")}</span>
+          <kbd className="text-[9px] font-mono bg-[var(--background)] border border-[var(--border)] px-1.5 py-0.5 rounded flex-shrink-0">{t("search_kbd")}</kbd>
+        </motion.button>
+
         {/* Right actions */}
         <div className="ml-auto flex items-center gap-2">
-          {/* Search trigger */}
-          <Tooltip content="Search tokens (⌘K)" side="bottom">
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={onSearchOpen}
-              className="gap-2 text-[var(--muted)] hover:text-[var(--foreground)] hidden sm:flex"
-            >
-              <Search size={13} />
-              <span className="text-xs">Search</span>
-              <kbd className="text-[9px] font-mono bg-[var(--surface-2)] border border-[var(--border)] px-1 py-0.5 rounded ml-1 opacity-70">⌘K</kbd>
-            </Button>
-          </Tooltip>
+          {/* Language toggle */}
+          <LanguageToggle />
 
           {/* App theme toggle */}
-          <Tooltip content={appTheme === "dark" ? "Switch to light mode" : "Switch to dark mode"} side="bottom">
+          <Tooltip content={appTheme === "dark" ? t("tooltip_light_mode") : t("tooltip_dark_mode")} side="bottom">
             <Button
               variant="ghost"
               size="icon"
@@ -121,7 +125,7 @@ export function Topbar({ onSearchOpen }: TopbarProps) {
 
           {/* Undo / Redo */}
           <div className="flex items-center gap-0.5">
-            <Tooltip content="Undo (⌘Z)" side="bottom">
+            <Tooltip content={t("tooltip_undo")} side="bottom">
               <Button
                 variant="ghost"
                 size="icon"
@@ -132,7 +136,7 @@ export function Topbar({ onSearchOpen }: TopbarProps) {
                 <Undo2 size={14} />
               </Button>
             </Tooltip>
-            <Tooltip content="Redo (⌘⇧Z)" side="bottom">
+            <Tooltip content={t("tooltip_redo")} side="bottom">
               <Button
                 variant="ghost"
                 size="icon"
@@ -149,7 +153,7 @@ export function Topbar({ onSearchOpen }: TopbarProps) {
 
           <PresetLoader />
 
-          <Tooltip content={`History${history.length > 0 ? ` (${history.length})` : ""}`} side="bottom">
+          <Tooltip content={`${t("tooltip_history")}${history.length > 0 ? ` (${history.length})` : ""}`} side="bottom">
             <Button
               variant="ghost"
               size="icon"
@@ -172,7 +176,7 @@ export function Topbar({ onSearchOpen }: TopbarProps) {
 
           <Button variant="accent" size="sm" onClick={() => setExportOpen(true)} className="gap-1.5">
             <Download size={13} />
-            Export
+            {t("btn_export")}
           </Button>
         </div>
       </header>
