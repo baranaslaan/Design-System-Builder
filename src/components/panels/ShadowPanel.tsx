@@ -33,11 +33,18 @@ export function ShadowPanel({ filter = "" }: { filter?: string }) {
             exit={{ opacity: 0, scale: 0.95 }}
             className="group/shadow flex flex-col gap-3 p-4 bg-[var(--surface-2)] rounded-xl border border-[var(--border)]"
           >
-            {/* Preview card */}
-            <div className="flex items-center justify-center h-20 bg-[var(--background)] rounded-lg">
+            {/* Preview card — light surface so shadows are always visible regardless of app theme */}
+            <div
+              className="flex items-center justify-center h-20 rounded-lg"
+              style={{ background: "#f4f4f5" }}
+            >
               <div
-                className="w-20 h-12 rounded-xl bg-[var(--surface-3)] border border-[var(--border)] transition-all duration-200"
-                style={{ boxShadow: shadow.value }}
+                className="w-20 h-12 rounded-xl transition-all duration-200"
+                style={{
+                  boxShadow: shadow.value,
+                  background: "#ffffff",
+                  border: "1px solid #e4e4e7",
+                }}
               />
             </div>
 
@@ -53,7 +60,7 @@ export function ShadowPanel({ filter = "" }: { filter?: string }) {
               <Button
                 variant="ghost"
                 size="icon"
-                className="h-7 w-7 opacity-0 group-hover:opacity-100 text-[var(--muted)] hover:text-red-400"
+                className="h-7 w-7 opacity-0 group-hover/shadow:opacity-100 text-[var(--muted)] hover:text-red-400 transition-opacity"
                 onClick={() => removeShadow(shadow.id)}
               >
                 <Trash2 size={13} />
