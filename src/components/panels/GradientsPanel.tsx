@@ -122,7 +122,7 @@ function GradientCard({ gradient }: { gradient: GradientToken }) {
           <Copy size={12} />
         </button>
         <Button variant="ghost" size="icon"
-          className="h-7 w-7 opacity-0 group-hover:opacity-100 text-[var(--muted)] hover:text-red-400"
+          className="h-7 w-7 opacity-0 group-hover:opacity-100 text-[var(--muted)] hover:text-[var(--danger)]"
           onClick={() => removeGradient(gradient.id)}>
           <Trash2 size={13} />
         </Button>

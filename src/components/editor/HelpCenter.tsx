@@ -266,7 +266,7 @@ export function HelpCenter({ open, onClose, initialTab = "tour" }: HelpCenterPro
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="fixed inset-0 z-50 bg-black/55 backdrop-blur-sm"
+            className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm"
           />
 
           <motion.div
@@ -285,7 +285,7 @@ export function HelpCenter({ open, onClose, initialTab = "tour" }: HelpCenterPro
                 <div className="text-sm font-semibold text-[var(--foreground)]">{t("help_title")}</div>
                 <div className="text-[11px] text-[var(--muted)]">{t("help_subtitle")}</div>
               </div>
-              <Button variant="ghost" size="icon" className="h-7 w-7" onClick={onClose}>
+              <Button variant="ghost" size="icon" className="h-7 w-7" onClick={onClose} aria-label="Close">
                 <X size={14} />
               </Button>
             </div>

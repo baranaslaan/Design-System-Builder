@@ -25,7 +25,7 @@ function ValueChip({ value, type }: { value: string; type: "before" | "after" })
       <span
         className={
           type === "before"
-            ? "text-red-400 line-through opacity-70"
+            ? "text-[var(--danger)] line-through opacity-70"
             : "text-emerald-400"
         }
       >
@@ -39,7 +39,7 @@ function DiffBadge({ type }: { type: "added" | "removed" | "changed" }) {
   if (type === "added")
     return <span className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-emerald-500/15 text-emerald-400 uppercase tracking-wide">+new</span>
   if (type === "removed")
-    return <span className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-red-500/15 text-red-400 uppercase tracking-wide">del</span>
+    return <span className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-red-500/15 text-[var(--danger)] uppercase tracking-wide">del</span>
   return <span className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-amber-500/15 text-amber-400 uppercase tracking-wide">mod</span>
 }
 
@@ -107,7 +107,7 @@ export function TokenDiffModal({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm"
+            className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm"
             onClick={onClose}
           />
 
@@ -124,12 +124,12 @@ export function TokenDiffModal({
               <div className="flex-1 min-w-0">
                 <div className="text-sm font-semibold text-[var(--foreground)]">{t("diff_title")}</div>
                 <div className="flex items-center gap-1.5 mt-0.5">
-                  <span className="text-[10px] font-mono text-red-400 truncate max-w-[140px]">{beforeLabel}</span>
+                  <span className="text-[10px] font-mono text-[var(--danger)] truncate max-w-[140px]">{beforeLabel}</span>
                   <ArrowRight size={9} className="text-[var(--muted)] flex-shrink-0" />
                   <span className="text-[10px] font-mono text-emerald-400 truncate max-w-[140px]">{afterLabel}</span>
                 </div>
               </div>
-              <Button variant="ghost" size="icon" className="h-7 w-7 flex-shrink-0" onClick={onClose}>
+              <Button variant="ghost" size="icon" className="h-7 w-7 flex-shrink-0" onClick={onClose} aria-label="Close">
                 <X size={14} />
               </Button>
             </div>
@@ -145,7 +145,7 @@ export function TokenDiffModal({
                     </span>
                   )}
                   {summary.removed > 0 && (
-                    <span className="flex items-center gap-1 text-xs text-red-400">
+                    <span className="flex items-center gap-1 text-xs text-[var(--danger)]">
                       <Minus size={11} /> {t("diff_removed", { n: summary.removed })}
                     </span>
                   )}

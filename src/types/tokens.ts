@@ -1,4 +1,6 @@
-export type TokenCategory = "colors" | "typography" | "spacing" | "radius" | "stroke" | "shadow" | "gradient"
+export type TokenCategory =
+  | "colors" | "typography" | "spacing" | "radius" | "stroke" | "shadow" | "gradient"
+  | "motion" | "opacity" | "breakpoint" | "zindex" | "blur"
 export type PreviewMode = "light" | "dark"
 export type Breakpoint = "mobile" | "tablet" | "desktop"
 
@@ -47,6 +49,13 @@ export interface GradientToken {
   stops: GradientStop[]
 }
 
+export type MotionDurations = Record<string, string>  // e.g. { fast: "150ms" }
+export type MotionEasings = Record<string, string>    // e.g. { standard: "cubic-bezier(0.4, 0, 0.2, 1)" }
+export type OpacityScale = Record<string, string>     // "0" – "1"
+export type BreakpointScale = Record<string, string>  // "640px"
+export type ZIndexScale = Record<string, string>      // string for "auto" support
+export type BlurScale = Record<string, string>        // "8px"
+
 export interface DesignTokens {
   name: string
   version: string
@@ -65,6 +74,11 @@ export interface DesignTokens {
   stroke: StrokeScale
   shadows: ShadowToken[]
   gradients: GradientToken[]
+  motion: { durations: MotionDurations; easings: MotionEasings }
+  opacity: OpacityScale
+  breakpoints: BreakpointScale
+  zIndex: ZIndexScale
+  blur: BlurScale
 }
 
 export interface HistoryEntry {

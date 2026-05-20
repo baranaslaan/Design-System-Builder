@@ -12,9 +12,13 @@ import { PRESETS } from "@/data/presets"
 import type { DesignTokens } from "@/types/tokens"
 
 const PRESET_META: Record<string, { label: string; description: string; color: string }> = {
-  default:  { label: "Default System",  description: "Violet-based modern system",  color: "#7c3aed" },
-  material: { label: "Material 3",      description: "Google Material Design 3",    color: "#6750a4" },
-  tailwind: { label: "Tailwind CSS",    description: "Official Tailwind defaults",  color: "#06b6d4" },
+  default:   { label: "Default System", description: "Violet-based modern system",  color: "#7c3aed" },
+  material:  { label: "Material 3",     description: "Google Material Design 3",    color: "#6750a4" },
+  tailwind:  { label: "Tailwind CSS",   description: "Official Tailwind defaults",  color: "#06b6d4" },
+  fluent:    { label: "Fluent 2",       description: "Microsoft design system",     color: "#115ea3" },
+  ant:       { label: "Ant Design",     description: "Alibaba enterprise system",   color: "#1677ff" },
+  carbon:    { label: "IBM Carbon",     description: "IBM open-source system",      color: "#0f62fe" },
+  bootstrap: { label: "Bootstrap 5",    description: "Classic web framework",       color: "#0d6efd" },
 }
 
 export function PresetLoader() {
@@ -195,7 +199,7 @@ export function PresetLoader() {
                                 </button>
                                 <button
                                   onClick={() => deleteCustomPreset(preset.id)}
-                                  className="w-6 h-6 flex items-center justify-center rounded hover:bg-[var(--surface-3)] text-[var(--muted)] hover:text-red-400 transition-colors"
+                                  className="w-6 h-6 flex items-center justify-center rounded hover:bg-[var(--surface-3)] text-[var(--muted)] hover:text-[var(--danger)] transition-colors"
                                 >
                                   <Trash2 size={11} />
                                 </button>

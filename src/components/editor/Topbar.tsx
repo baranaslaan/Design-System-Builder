@@ -111,6 +111,7 @@ export function Topbar({ onSearchOpen, onHelpOpen: _onHelpOpen }: TopbarProps) {
               size="icon"
               onClick={() => setAppTheme(appTheme === "dark" ? "light" : "dark")}
               className="h-8 w-8"
+              aria-label={appTheme === "dark" ? t("tooltip_light_mode") : t("tooltip_dark_mode")}
             >
               <motion.div
                 key={appTheme}
@@ -132,6 +133,7 @@ export function Topbar({ onSearchOpen, onHelpOpen: _onHelpOpen }: TopbarProps) {
                 onClick={undo}
                 disabled={undoStack.length === 0}
                 className="h-8 w-8 disabled:opacity-30"
+                aria-label={t("tooltip_undo")}
               >
                 <Undo2 size={14} />
               </Button>
@@ -143,6 +145,7 @@ export function Topbar({ onSearchOpen, onHelpOpen: _onHelpOpen }: TopbarProps) {
                 onClick={redo}
                 disabled={redoStack.length === 0}
                 className="h-8 w-8 disabled:opacity-30"
+                aria-label={t("tooltip_redo")}
               >
                 <Redo2 size={14} />
               </Button>
@@ -159,6 +162,7 @@ export function Topbar({ onSearchOpen, onHelpOpen: _onHelpOpen }: TopbarProps) {
               size="icon"
               onClick={() => setHistoryOpen(true)}
               className="relative"
+              aria-label={t("tooltip_history")}
             >
               <History size={14} />
               {history.length > 0 && (

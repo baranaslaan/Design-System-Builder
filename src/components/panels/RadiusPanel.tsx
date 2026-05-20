@@ -46,7 +46,7 @@ export function RadiusPanel({ filter = "" }: { filter?: string }) {
                 className="group/card flex flex-col gap-2 p-3 bg-[var(--surface-2)] rounded-xl border border-[var(--border)] relative"
               >
                 <button
-                  className="absolute top-2 right-2 opacity-0 group-hover/card:opacity-100 transition-opacity text-[var(--muted)] hover:text-red-400"
+                  className="absolute top-2 right-2 opacity-0 group-hover/card:opacity-100 transition-opacity text-[var(--muted)] hover:text-[var(--danger)]"
                   onClick={() => removeRadius(key)}
                   title={t("btn_remove")}
                 >

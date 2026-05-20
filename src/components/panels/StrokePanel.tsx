@@ -72,7 +72,7 @@ export function StrokePanel({ filter = "" }: { filter?: string }) {
               />
 
               <button
-                className="opacity-0 group-hover:opacity-100 transition-opacity text-[var(--muted)] hover:text-red-400 shrink-0"
+                className="opacity-0 group-hover:opacity-100 transition-opacity text-[var(--muted)] hover:text-[var(--danger)] shrink-0"
                 onClick={() => removeStroke(key)}
                 title={t("btn_remove")}
               >

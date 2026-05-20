@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef, useMemo, useCallback } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { Search, X, ArrowRight, Palette, Type, Space, Circle, Minus, BoxSelect, Blend, CornerDownLeft } from "lucide-react"
+import { Search, X, ArrowRight, Palette, Type, Space, Circle, Minus, BoxSelect, Blend, CornerDownLeft, Zap, Droplets, Monitor, Layers, CircleDashed } from "lucide-react"
 import { useTokensStore } from "@/store/tokens"
 import { buildSearchIndex, searchTokens } from "@/lib/search"
 import type { TokenCategory } from "@/types/tokens"
@@ -16,6 +16,11 @@ const CATEGORY_ICONS: Record<TokenCategory, React.ReactNode> = {
   stroke:     <Minus size={11} />,
   shadow:     <BoxSelect size={11} />,
   gradient:   <Blend size={11} />,
+  motion:     <Zap size={11} />,
+  opacity:    <Droplets size={11} />,
+  breakpoint: <Monitor size={11} />,
+  zindex:     <Layers size={11} />,
+  blur:       <CircleDashed size={11} />,
 }
 
 const CATEGORY_LABELS: Record<TokenCategory, string> = {
@@ -26,9 +31,14 @@ const CATEGORY_LABELS: Record<TokenCategory, string> = {
   stroke:     "Stroke",
   shadow:     "Shadows",
   gradient:   "Gradients",
+  motion:     "Motion",
+  opacity:    "Opacity",
+  breakpoint: "Breakpoints",
+  zindex:     "Z-Index",
+  blur:       "Blur",
 }
 
-const ALL_CATEGORIES: TokenCategory[] = ["colors", "typography", "spacing", "radius", "stroke", "shadow", "gradient"]
+const ALL_CATEGORIES: TokenCategory[] = ["colors", "typography", "spacing", "radius", "stroke", "shadow", "gradient", "motion", "opacity", "breakpoint", "zindex", "blur"]
 
 interface TokenSearchProps {
   open: boolean
@@ -86,7 +96,7 @@ export function TokenSearch({ open, onClose }: TokenSearchProps) {
           <motion.div
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
             transition={{ duration: 0.15 }}
-            className="fixed inset-0 bg-black/55 backdrop-blur-sm z-50"
+            className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50"
             onClick={onClose}
           />
 

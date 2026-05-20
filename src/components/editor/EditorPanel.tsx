@@ -12,6 +12,11 @@ import { RadiusPanel } from "@/components/panels/RadiusPanel"
 import { StrokePanel } from "@/components/panels/StrokePanel"
 import { ShadowPanel } from "@/components/panels/ShadowPanel"
 import { GradientsPanel } from "@/components/panels/GradientsPanel"
+import { MotionPanel } from "@/components/panels/MotionPanel"
+import { OpacityPanel } from "@/components/panels/OpacityPanel"
+import { BreakpointsPanel } from "@/components/panels/BreakpointsPanel"
+import { ZIndexPanel } from "@/components/panels/ZIndexPanel"
+import { BlurPanel } from "@/components/panels/BlurPanel"
 
 const PANEL_TITLE_KEYS: Record<string, StringKey> = {
   colors:     "title_colors",
@@ -21,6 +26,11 @@ const PANEL_TITLE_KEYS: Record<string, StringKey> = {
   stroke:     "title_stroke",
   shadow:     "title_shadow",
   gradient:   "title_gradient",
+  motion:     "title_motion",
+  opacity:    "title_opacity",
+  breakpoint: "title_breakpoint",
+  zindex:     "title_zindex",
+  blur:       "title_blur",
 }
 
 export function EditorPanel() {
@@ -40,6 +50,11 @@ export function EditorPanel() {
     stroke:     <StrokePanel filter={filter} />,
     shadow:     <ShadowPanel filter={filter} />,
     gradient:   <GradientsPanel filter={filter} />,
+    motion:     <MotionPanel filter={filter} />,
+    opacity:    <OpacityPanel filter={filter} />,
+    breakpoint: <BreakpointsPanel filter={filter} />,
+    zindex:     <ZIndexPanel filter={filter} />,
+    blur:       <BlurPanel filter={filter} />,
   }
 
   return (

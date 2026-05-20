@@ -103,6 +103,36 @@ interface TokensState {
   addGradient: (gradient: GradientToken) => void
   removeGradient: (id: string) => void
 
+  // Motion / Opacity / Breakpoints / Z-Index / Blur — generic scale actions
+  updateMotionDuration: (key: string, value: string) => void
+  renameMotionDuration: (oldKey: string, newKey: string) => void
+  addMotionDuration: (key: string, value: string) => void
+  removeMotionDuration: (key: string) => void
+  updateMotionEasing: (key: string, value: string) => void
+  renameMotionEasing: (oldKey: string, newKey: string) => void
+  addMotionEasing: (key: string, value: string) => void
+  removeMotionEasing: (key: string) => void
+
+  updateOpacity: (key: string, value: string) => void
+  renameOpacity: (oldKey: string, newKey: string) => void
+  addOpacity: (key: string, value: string) => void
+  removeOpacity: (key: string) => void
+
+  updateBreakpoint: (key: string, value: string) => void
+  renameBreakpoint: (oldKey: string, newKey: string) => void
+  addBreakpoint: (key: string, value: string) => void
+  removeBreakpoint: (key: string) => void
+
+  updateZIndex: (key: string, value: string) => void
+  renameZIndex: (oldKey: string, newKey: string) => void
+  addZIndex: (key: string, value: string) => void
+  removeZIndex: (key: string) => void
+
+  updateBlur: (key: string, value: string) => void
+  renameBlur: (oldKey: string, newKey: string) => void
+  addBlur: (key: string, value: string) => void
+  removeBlur: (key: string) => void
+
   // Meta
   updateName: (name: string) => void
 }
@@ -381,14 +411,110 @@ export const useTokensStore = create<TokensState>()(
 
       updateName: (name) =>
         set((s) => ({ tokens: { ...s.tokens, name } })),
+
+      // ── Motion durations ─────────────────────────────────────
+      updateMotionDuration: (key, value) =>
+        set((s) => ({ undoStack: [s.tokens, ...s.undoStack].slice(0, 40), redoStack: [],
+          tokens: { ...s.tokens, motion: { ...s.tokens.motion, durations: { ...s.tokens.motion.durations, [key]: value } } } })),
+      addMotionDuration: (key, value) =>
+        set((s) => ({ undoStack: [s.tokens, ...s.undoStack].slice(0, 40), redoStack: [],
+          tokens: { ...s.tokens, motion: { ...s.tokens.motion, durations: { ...s.tokens.motion.durations, [key]: value } } } })),
+      removeMotionDuration: (key) =>
+        set((s) => { const d = { ...s.tokens.motion.durations }; delete d[key];
+          return { undoStack: [s.tokens, ...s.undoStack].slice(0, 40), redoStack: [],
+            tokens: { ...s.tokens, motion: { ...s.tokens.motion, durations: d } } } }),
+      renameMotionDuration: (oldKey, newKey) =>
+        set((s) => { if (oldKey === newKey || !newKey.trim()) return {}; const d = { ...s.tokens.motion.durations }; const v = d[oldKey]; delete d[oldKey]; d[newKey] = v;
+          return { undoStack: [s.tokens, ...s.undoStack].slice(0, 40), redoStack: [],
+            tokens: { ...s.tokens, motion: { ...s.tokens.motion, durations: d } } } }),
+
+      // ── Motion easings ───────────────────────────────────────
+      updateMotionEasing: (key, value) =>
+        set((s) => ({ undoStack: [s.tokens, ...s.undoStack].slice(0, 40), redoStack: [],
+          tokens: { ...s.tokens, motion: { ...s.tokens.motion, easings: { ...s.tokens.motion.easings, [key]: value } } } })),
+      addMotionEasing: (key, value) =>
+        set((s) => ({ undoStack: [s.tokens, ...s.undoStack].slice(0, 40), redoStack: [],
+          tokens: { ...s.tokens, motion: { ...s.tokens.motion, easings: { ...s.tokens.motion.easings, [key]: value } } } })),
+      removeMotionEasing: (key) =>
+        set((s) => { const e = { ...s.tokens.motion.easings }; delete e[key];
+          return { undoStack: [s.tokens, ...s.undoStack].slice(0, 40), redoStack: [],
+            tokens: { ...s.tokens, motion: { ...s.tokens.motion, easings: e } } } }),
+      renameMotionEasing: (oldKey, newKey) =>
+        set((s) => { if (oldKey === newKey || !newKey.trim()) return {}; const e = { ...s.tokens.motion.easings }; const v = e[oldKey]; delete e[oldKey]; e[newKey] = v;
+          return { undoStack: [s.tokens, ...s.undoStack].slice(0, 40), redoStack: [],
+            tokens: { ...s.tokens, motion: { ...s.tokens.motion, easings: e } } } }),
+
+      // ── Opacity ──────────────────────────────────────────────
+      updateOpacity: (key, value) =>
+        set((s) => ({ undoStack: [s.tokens, ...s.undoStack].slice(0, 40), redoStack: [],
+          tokens: { ...s.tokens, opacity: { ...s.tokens.opacity, [key]: value } } })),
+      addOpacity: (key, value) =>
+        set((s) => ({ undoStack: [s.tokens, ...s.undoStack].slice(0, 40), redoStack: [],
+          tokens: { ...s.tokens, opacity: { ...s.tokens.opacity, [key]: value } } })),
+      removeOpacity: (key) =>
+        set((s) => { const o = { ...s.tokens.opacity }; delete o[key];
+          return { undoStack: [s.tokens, ...s.undoStack].slice(0, 40), redoStack: [], tokens: { ...s.tokens, opacity: o } } }),
+      renameOpacity: (oldKey, newKey) =>
+        set((s) => { if (oldKey === newKey || !newKey.trim()) return {}; const o = { ...s.tokens.opacity }; const v = o[oldKey]; delete o[oldKey]; o[newKey] = v;
+          return { undoStack: [s.tokens, ...s.undoStack].slice(0, 40), redoStack: [], tokens: { ...s.tokens, opacity: o } } }),
+
+      // ── Breakpoints ──────────────────────────────────────────
+      updateBreakpoint: (key, value) =>
+        set((s) => ({ undoStack: [s.tokens, ...s.undoStack].slice(0, 40), redoStack: [],
+          tokens: { ...s.tokens, breakpoints: { ...s.tokens.breakpoints, [key]: value } } })),
+      addBreakpoint: (key, value) =>
+        set((s) => ({ undoStack: [s.tokens, ...s.undoStack].slice(0, 40), redoStack: [],
+          tokens: { ...s.tokens, breakpoints: { ...s.tokens.breakpoints, [key]: value } } })),
+      removeBreakpoint: (key) =>
+        set((s) => { const b = { ...s.tokens.breakpoints }; delete b[key];
+          return { undoStack: [s.tokens, ...s.undoStack].slice(0, 40), redoStack: [], tokens: { ...s.tokens, breakpoints: b } } }),
+      renameBreakpoint: (oldKey, newKey) =>
+        set((s) => { if (oldKey === newKey || !newKey.trim()) return {}; const b = { ...s.tokens.breakpoints }; const v = b[oldKey]; delete b[oldKey]; b[newKey] = v;
+          return { undoStack: [s.tokens, ...s.undoStack].slice(0, 40), redoStack: [], tokens: { ...s.tokens, breakpoints: b } } }),
+
+      // ── Z-Index ──────────────────────────────────────────────
+      updateZIndex: (key, value) =>
+        set((s) => ({ undoStack: [s.tokens, ...s.undoStack].slice(0, 40), redoStack: [],
+          tokens: { ...s.tokens, zIndex: { ...s.tokens.zIndex, [key]: value } } })),
+      addZIndex: (key, value) =>
+        set((s) => ({ undoStack: [s.tokens, ...s.undoStack].slice(0, 40), redoStack: [],
+          tokens: { ...s.tokens, zIndex: { ...s.tokens.zIndex, [key]: value } } })),
+      removeZIndex: (key) =>
+        set((s) => { const z = { ...s.tokens.zIndex }; delete z[key];
+          return { undoStack: [s.tokens, ...s.undoStack].slice(0, 40), redoStack: [], tokens: { ...s.tokens, zIndex: z } } }),
+      renameZIndex: (oldKey, newKey) =>
+        set((s) => { if (oldKey === newKey || !newKey.trim()) return {}; const z = { ...s.tokens.zIndex }; const v = z[oldKey]; delete z[oldKey]; z[newKey] = v;
+          return { undoStack: [s.tokens, ...s.undoStack].slice(0, 40), redoStack: [], tokens: { ...s.tokens, zIndex: z } } }),
+
+      // ── Blur ─────────────────────────────────────────────────
+      updateBlur: (key, value) =>
+        set((s) => ({ undoStack: [s.tokens, ...s.undoStack].slice(0, 40), redoStack: [],
+          tokens: { ...s.tokens, blur: { ...s.tokens.blur, [key]: value } } })),
+      addBlur: (key, value) =>
+        set((s) => ({ undoStack: [s.tokens, ...s.undoStack].slice(0, 40), redoStack: [],
+          tokens: { ...s.tokens, blur: { ...s.tokens.blur, [key]: value } } })),
+      removeBlur: (key) =>
+        set((s) => { const b = { ...s.tokens.blur }; delete b[key];
+          return { undoStack: [s.tokens, ...s.undoStack].slice(0, 40), redoStack: [], tokens: { ...s.tokens, blur: b } } }),
+      renameBlur: (oldKey, newKey) =>
+        set((s) => { if (oldKey === newKey || !newKey.trim()) return {}; const b = { ...s.tokens.blur }; const v = b[oldKey]; delete b[oldKey]; b[newKey] = v;
+          return { undoStack: [s.tokens, ...s.undoStack].slice(0, 40), redoStack: [], tokens: { ...s.tokens, blur: b } } }),
     }),
     {
       name: "design-tokens-v2",
-      version: 1,
-      migrate: (persistedState: unknown, fromVersion: number) => {
+      version: 2,
+      migrate: (persistedState: unknown, _fromVersion: number) => {
         const state = persistedState as TokensState
-        const fixTokens = (t: DesignTokens): DesignTokens =>
-          Array.isArray(t?.gradients) ? t : { ...t, gradients: PRESETS.default.gradients }
+        const d = PRESETS.default
+        const fixTokens = (t: DesignTokens): DesignTokens => ({
+          ...t,
+          gradients:   Array.isArray(t?.gradients) ? t.gradients : d.gradients,
+          motion:      t?.motion      ?? d.motion,
+          opacity:     t?.opacity     ?? d.opacity,
+          breakpoints: t?.breakpoints ?? d.breakpoints,
+          zIndex:      t?.zIndex      ?? d.zIndex,
+          blur:        t?.blur        ?? d.blur,
+        })
         state.tokens = fixTokens(state.tokens)
         state.undoStack = (state.undoStack ?? []).map(fixTokens)
         state.redoStack = (state.redoStack ?? []).map(fixTokens)

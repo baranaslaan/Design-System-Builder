@@ -60,7 +60,7 @@ export function ShadowPanel({ filter = "" }: { filter?: string }) {
               <Button
                 variant="ghost"
                 size="icon"
-                className="h-7 w-7 opacity-0 group-hover/shadow:opacity-100 text-[var(--muted)] hover:text-red-400 transition-opacity"
+                className="h-7 w-7 opacity-0 group-hover/shadow:opacity-100 text-[var(--muted)] hover:text-[var(--danger)] transition-opacity"
                 onClick={() => removeShadow(shadow.id)}
               >
                 <Trash2 size={13} />

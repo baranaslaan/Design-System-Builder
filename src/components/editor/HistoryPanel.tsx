@@ -104,7 +104,7 @@ export function HistoryPanel({ open, onClose }: HistoryPanelProps) {
                     </span>
                   )}
                 </div>
-                <Button variant="ghost" size="icon" className="h-7 w-7" onClick={onClose}>
+                <Button variant="ghost" size="icon" className="h-7 w-7" onClick={onClose} aria-label="Close">
                   <X size={14} />
                 </Button>
               </div>
@@ -123,7 +123,7 @@ export function HistoryPanel({ open, onClose }: HistoryPanelProps) {
                   <Button
                     size="sm"
                     variant="ghost"
-                    className="gap-1.5 text-xs text-[var(--muted)] hover:text-red-400"
+                    className="gap-1.5 text-xs text-[var(--muted)] hover:text-[var(--danger)]"
                     onClick={clearHistory}
                   >
                     <Trash2 size={12} />

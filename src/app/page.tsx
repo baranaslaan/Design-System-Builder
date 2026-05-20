@@ -27,10 +27,10 @@ const BREAKPOINT_PANEL_WIDTH: Record<PreviewMode, number> = {
 
 // Per-mode minimums (split needs more room for two frames)
 const MIN_PANEL_WIDTH: Record<PreviewMode, number> = {
-  desktop: 380,
-  tablet:  380,
-  mobile:  340,
-  split:   600,
+  desktop: 400,
+  tablet:  400,
+  mobile:  360,
+  split:   640,
 }
 
 // Viewport-aware max: leave room for sidebar (~210px) + editor (~360px min)
@@ -312,7 +312,7 @@ function SplitPreview({ panelWidth }: { panelWidth: number }) {
           <span className="text-[9px] font-mono text-[var(--muted)] uppercase tracking-wide">Desktop 1280</span>
         </div>
         <div className="flex-1 overflow-hidden rounded-xl border border-[var(--border)]">
-          <DeviceFrame breakpoint="tablet" panelWidth={halfW}>
+          <DeviceFrame breakpoint="desktop" panelWidth={halfW}>
             <ComponentPreview />
           </DeviceFrame>
         </div>

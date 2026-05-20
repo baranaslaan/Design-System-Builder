@@ -71,7 +71,7 @@ function PaletteRow({ palette, colorFormat }: { palette: ColorPalette; colorForm
               className="absolute inset-0 opacity-0 cursor-pointer"
             />
           </label>
-          <Button variant="ghost" size="icon" className="h-8 w-8 text-[var(--muted)] hover:text-red-400"
+          <Button variant="ghost" size="icon" className="h-8 w-8 text-[var(--muted)] hover:text-[var(--danger)]"
             onClick={() => removeColorPalette(palette.id)}>
             <Trash2 size={13} />
           </Button>
@@ -152,8 +152,9 @@ function AliasPicker({
     <div ref={ref} className="relative">
       <button
         onClick={() => { if (value) { onClear() } else { setOpen(!open) } }}
-        className="flex items-center justify-center w-5 h-5 rounded transition-colors hover:bg-[var(--surface-3)]"
+        className="flex items-center justify-center w-6 h-6 rounded transition-colors hover:bg-[var(--surface-3)]"
         title={value ? `Alias: ${value} — click to clear` : "Set alias"}
+        aria-label={value ? `Alias: ${value} — click to clear` : "Set alias"}
       >
         {value
           ? <Link size={10} className="text-[var(--accent)]" />
@@ -245,7 +246,7 @@ function SemanticRow({ color, palettes, colorFormat }: { color: SemanticColor; p
         <Button
           variant="ghost"
           size="icon"
-          className="h-6 w-6 opacity-0 group-hover:opacity-100 text-[var(--muted)] hover:text-red-400 flex-shrink-0"
+          className="h-6 w-6 opacity-0 group-hover:opacity-100 text-[var(--muted)] hover:text-[var(--danger)] flex-shrink-0"
           onClick={() => removeSemanticColor(color.id)}
         >
           <Trash2 size={12} />

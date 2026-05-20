@@ -2,7 +2,8 @@
 
 import { motion } from "framer-motion"
 import {
-  Palette, Type, Space, Circle, Minus, BoxSelect, Layers, Blend
+  Palette, Type, Space, Circle, Minus, BoxSelect, Layers, Blend,
+  Zap, Droplets, Monitor, CircleDashed,
 } from "lucide-react"
 import { useTokensStore } from "@/store/tokens"
 import { useT, type StringKey } from "@/lib/i18n"
@@ -51,6 +52,36 @@ const CATEGORIES: { key: TokenCategory; labelKey: StringKey; icon: React.ReactNo
     icon: <Blend size={15} />,
     count: (t) => t.gradients?.length ?? 0,
   },
+  {
+    key: "motion",
+    labelKey: "cat_motion",
+    icon: <Zap size={15} />,
+    count: (t) => (Object.keys(t.motion?.durations ?? {}).length) + (Object.keys(t.motion?.easings ?? {}).length),
+  },
+  {
+    key: "opacity",
+    labelKey: "cat_opacity",
+    icon: <Droplets size={15} />,
+    count: (t) => Object.keys(t.opacity ?? {}).length,
+  },
+  {
+    key: "breakpoint",
+    labelKey: "cat_breakpoints",
+    icon: <Monitor size={15} />,
+    count: (t) => Object.keys(t.breakpoints ?? {}).length,
+  },
+  {
+    key: "zindex",
+    labelKey: "cat_zindex",
+    icon: <Layers size={15} />,
+    count: (t) => Object.keys(t.zIndex ?? {}).length,
+  },
+  {
+    key: "blur",
+    labelKey: "cat_blur",
+    icon: <CircleDashed size={15} />,
+    count: (t) => Object.keys(t.blur ?? {}).length,
+  },
 ]
 
 export function Sidebar() {
@@ -78,15 +109,23 @@ export function Sidebar() {
                 transition={{ type: "spring", stiffness: 350, damping: 35 }}
               />
             )}
+            {/* Accent bar on active — adds primary affordance */}
+            {isActive && (
+              <motion.div
+                layoutId="sidebar-active-bar"
+                className="absolute left-0 top-2 bottom-2 w-0.5 rounded-r-full bg-[var(--accent)]"
+                transition={{ type: "spring", stiffness: 350, damping: 35 }}
+              />
+            )}
             <span className="relative z-10 flex-shrink-0" style={{ color: isActive ? "var(--accent)" : undefined }}>
               {icon}
             </span>
-            <span className="relative z-10 text-sm font-medium flex-1">{label}</span>
+            <span className={`relative z-10 text-sm flex-1 ${isActive ? "font-semibold" : "font-medium"}`}>{label}</span>
             <span
               className="relative z-10 text-[10px] font-mono rounded-full px-1.5 py-0.5"
               style={{
                 background: isActive ? "var(--accent-muted)" : "var(--surface-3)",
-                color: isActive ? "#a78bfa" : "var(--muted)",
+                color: isActive ? "var(--accent)" : "var(--muted)",
               }}
             >
               {count(tokens)}
