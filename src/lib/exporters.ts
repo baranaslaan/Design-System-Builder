@@ -311,6 +311,12 @@ export function tokenStats(tokens: DesignTokens) {
 }
 
 // ─── Figma Tokens ─────────────────────────────────────────────────────────
+/**
+ * Legacy Figma Tokens plugin format (manual copy/paste).
+ * @deprecated Prefer the two-way sync via `src/lib/figma/syncEngine.ts`
+ *             (uses the Figma Variables REST API + DTCG canonical format).
+ *             Kept for backward compatibility with the export modal.
+ */
 export function exportToFigmaTokens(tokens: DesignTokens): string {
   const result: FigmaTokensFormat = {}
 

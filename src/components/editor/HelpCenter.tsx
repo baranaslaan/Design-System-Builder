@@ -19,13 +19,18 @@ const TABS: { key: TabKey; labelKey: StringKey; icon: React.ReactNode }[] = [
   { key: "tips",      labelKey: "help_tab_tips",      icon: <Lightbulb size={13} /> },
 ]
 
-// ── Tour steps ──────────────────────────────────────────────────────────────
+// ── Tour steps (ordered by natural usage flow) ───────────────────────────────
 const TOUR_STEPS: { titleKey: StringKey; descKey: StringKey; icon: React.ReactNode; color: string }[] = [
-  { titleKey: "tour_step1_title", descKey: "tour_step1_desc", icon: <Sparkles size={28} />, color: "var(--accent)" },
-  { titleKey: "tour_step2_title", descKey: "tour_step2_desc", icon: <Layers size={28} />,    color: "#6366f1" },
-  { titleKey: "tour_step3_title", descKey: "tour_step3_desc", icon: <Eye size={28} />,        color: "#10b981" },
-  { titleKey: "tour_step4_title", descKey: "tour_step4_desc", icon: <Download size={28} />,   color: "#f59e0b" },
-  { titleKey: "tour_step5_title", descKey: "tour_step5_desc", icon: <Rocket size={28} />,     color: "var(--accent)" },
+  { titleKey: "tour_step1_title",  descKey: "tour_step1_desc",  icon: <Sparkles size={28} />,    color: "var(--accent)" }, // 1. Welcome
+  { titleKey: "tour_step2_title",  descKey: "tour_step2_desc",  icon: <Layers size={28} />,       color: "#6366f1" },       // 2. Sidebar navigation
+  { titleKey: "tour_step6_title",  descKey: "tour_step6_desc",  icon: <Palette size={28} />,      color: "#ec4899" },       // 3. Color palettes
+  { titleKey: "tour_step8_title",  descKey: "tour_step8_desc",  icon: <GitCompare size={28} />,   color: "#f97316" },       // 4. Semantic tokens
+  { titleKey: "tour_step7_title",  descKey: "tour_step7_desc",  icon: <Type size={28} />,         color: "#8b5cf6" },       // 5. Typography
+  { titleKey: "tour_step3_title",  descKey: "tour_step3_desc",  icon: <Eye size={28} />,           color: "#10b981" },       // 6. Preview panel
+  { titleKey: "tour_step9_title",  descKey: "tour_step9_desc",  icon: <History size={28} />,      color: "#06b6d4" },       // 7. History & snapshots
+  { titleKey: "tour_step10_title", descKey: "tour_step10_desc", icon: <GitCompare size={28} />,   color: "#14b8a6" },       // 8. Compare & diff
+  { titleKey: "tour_step4_title",  descKey: "tour_step4_desc",  icon: <Download size={28} />,     color: "#f59e0b" },       // 9. Export
+  { titleKey: "tour_step5_title",  descKey: "tour_step5_desc",  icon: <Rocket size={28} />,       color: "var(--accent)" }, // 10. Ready!
 ]
 
 // ── Features list ────────────────────────────────────────────────────────────
@@ -171,7 +176,7 @@ function TourPanel({ onDone }: { onDone: () => void }) {
 
 function FeaturesPanel() {
   return (
-    <div className="px-5 py-4 grid grid-cols-2 gap-3 overflow-y-auto">
+    <div className="h-full px-5 py-4 grid grid-cols-2 gap-3 overflow-y-auto">
       {FEATURES.map((f) => (
         <motion.div
           key={f.name}
@@ -195,7 +200,7 @@ function FeaturesPanel() {
 
 function ShortcutsPanel() {
   return (
-    <div className="px-5 py-4 overflow-y-auto">
+    <div className="h-full px-5 py-4 overflow-y-auto">
       <div className="flex flex-col gap-1.5">
         {SHORTCUTS.map((s, i) => (
           <motion.div
@@ -225,7 +230,7 @@ function ShortcutsPanel() {
 
 function TipsPanel() {
   return (
-    <div className="px-5 py-4 flex flex-col gap-2 overflow-y-auto">
+    <div className="h-full px-5 py-4 flex flex-col gap-2 overflow-y-auto">
       {TIPS.map((t, i) => (
         <motion.div
           key={i}
@@ -274,7 +279,7 @@ export function HelpCenter({ open, onClose, initialTab = "tour" }: HelpCenterPro
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.96, y: 16 }}
             transition={{ type: "spring", stiffness: 380, damping: 32 }}
-            className="fixed inset-x-4 top-8 bottom-8 z-50 max-w-3xl mx-auto flex flex-col bg-[var(--surface)] border border-[var(--border)] rounded-2xl shadow-2xl overflow-hidden"
+            className="fixed inset-x-4 top-1/2 -mt-[340px] z-50 max-w-3xl mx-auto h-[680px] flex flex-col bg-[var(--surface)] border border-[var(--border)] rounded-2xl shadow-2xl overflow-hidden"
           >
             {/* Header */}
             <div className="flex items-center gap-3 px-5 py-4 border-b border-[var(--border)] flex-shrink-0">

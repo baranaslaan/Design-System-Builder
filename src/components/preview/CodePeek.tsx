@@ -37,7 +37,7 @@ export function CodePeek({ spec, align = "top-right", inline = false, children }
           onClick={(e) => { e.stopPropagation(); setOpen(true) }}
           title="View code"
           aria-label="View component code"
-          className={`absolute ${POSITIONS[align]} z-10 w-5 h-5 rounded-md bg-[var(--surface)] border border-[var(--border)] hover:border-[var(--accent)] hover:bg-[var(--accent-muted)] flex items-center justify-center text-[var(--muted)] hover:text-[var(--accent)] opacity-0 group-hover/peek:opacity-100 focus-visible:opacity-100 transition-all shadow-sm pointer-events-auto`}
+          className={`absolute ${POSITIONS[align]} z-10 w-5 h-5 rounded-md bg-[var(--surface)] border border-[var(--border)] hover:border-[var(--accent)] hover:bg-[var(--accent-muted)] flex items-center justify-center text-[var(--muted)] hover:text-[var(--accent)] transition-all shadow-sm pointer-events-auto`}
         >
           <Code2 size={10} />
         </button>

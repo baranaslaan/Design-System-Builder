@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback, useRef } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { PanelRight, PanelRightClose, Monitor, Tablet, Smartphone, Columns2, HelpCircle, RotateCcw } from "lucide-react"
+import { PanelRight, PanelRightClose, Monitor, Tablet, Smartphone, Columns2, HelpCircle, RotateCcw, History, Sun, Moon } from "lucide-react"
 import { Topbar } from "@/components/editor/Topbar"
 import { Sidebar } from "@/components/editor/Sidebar"
 import { EditorPanel } from "@/components/editor/EditorPanel"
@@ -10,6 +10,7 @@ import { ComponentPreview } from "@/components/preview/ComponentPreview"
 import { DeviceFrame } from "@/components/preview/DeviceFrame"
 import { TokenSearch } from "@/components/editor/TokenSearch"
 import { HelpCenter } from "@/components/editor/HelpCenter"
+import { HistoryPanel } from "@/components/editor/HistoryPanel"
 import { TooltipProvider, Tooltip } from "@/components/ui/tooltip"
 import { Button } from "@/components/ui/button"
 import { useTokensStore } from "@/store/tokens"
@@ -47,12 +48,13 @@ const BREAKPOINT_BUTTONS: { key: PreviewMode; icon: React.ReactNode; label: stri
 ]
 
 export default function Home() {
-  const { hasSeenOnboarding, setHasSeenOnboarding, previewWidth, setPreviewWidth } = useTokensStore()
+  const { hasSeenOnboarding, setHasSeenOnboarding, previewWidth, setPreviewWidth, appTheme, setAppTheme, history } = useTokensStore()
   const t = useT()
 
   const [previewOpen,  setPreviewOpen]  = useState(true)
   const [searchOpen,   setSearchOpen]   = useState(false)
   const [helpOpen,     setHelpOpen]     = useState(false)
+  const [historyOpen,  setHistoryOpen]  = useState(false)
   const [previewMode,  setPreviewMode]  = useState<PreviewMode>("desktop")
   const [isDragging,   setIsDragging]   = useState(false)
   const [maxWidth,     setMaxWidth]     = useState(() => computeMaxPanelWidth())
@@ -230,20 +232,13 @@ export default function Home() {
                   </Tooltip>
                 )}
 
-                {/* Width badge */}
-                <Tooltip content={t("preview_tooltip_min_max", { min: minWidth, max: maxWidth })} side="bottom">
-                  <motion.span
-                    key={`${previewMode}-${Math.round(panelWidth)}`}
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    className="ml-auto text-[10px] font-mono text-[var(--muted)] bg-[var(--surface-2)] px-1.5 py-0.5 rounded cursor-help"
-                    style={{
-                      color: panelWidth <= minWidth || panelWidth >= maxWidth ? "var(--accent)" : undefined,
-                    }}
-                  >
-                    {Math.round(panelWidth)}px
-                  </motion.span>
-                </Tooltip>
+                {/* Width inline input */}
+                <WidthInput
+                  value={panelWidth}
+                  min={minWidth}
+                  max={maxWidth}
+                  onChange={(v) => setPreviewWidth(v)}
+                />
               </div>
 
               {/* Preview content */}
@@ -261,9 +256,10 @@ export default function Home() {
 
           <TokenSearch open={searchOpen} onClose={() => setSearchOpen(false)} />
           <HelpCenter open={helpOpen} onClose={closeHelp} />
+          <HistoryPanel open={historyOpen} onClose={() => setHistoryOpen(false)} />
 
-          {/* Toggle button */}
-          <div className="flex flex-col items-center py-4 px-1.5 border-l border-[var(--border)] gap-1">
+          {/* Right column — preview toggle + secondary actions */}
+          <div className="flex flex-col items-center py-3 pl-1.5 pr-3.5 border-l border-[var(--border)] gap-1">
             <Tooltip content={previewOpen ? t("tooltip_hide_preview") : t("tooltip_show_preview")} side="left">
               <Button variant="ghost" size="icon" onClick={() => setPreviewOpen(!previewOpen)} className="h-8 w-8">
                 <motion.div animate={{ rotate: previewOpen ? 0 : 180 }}>
@@ -281,10 +277,108 @@ export default function Home() {
                 <HelpCircle size={14} />
               </Button>
             </Tooltip>
+
+            <div className="w-4 h-px bg-[var(--border)] my-0.5" />
+
+            <Tooltip content={appTheme === "dark" ? t("tooltip_light_mode") : t("tooltip_dark_mode")} side="left">
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => setAppTheme(appTheme === "dark" ? "light" : "dark")}
+                className="h-8 w-8 text-[var(--muted)] hover:text-[var(--foreground)]"
+              >
+                <motion.div key={appTheme} initial={{ rotate: -30, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} transition={{ duration: 0.2 }}>
+                  {appTheme === "dark" ? <Sun size={14} /> : <Moon size={14} />}
+                </motion.div>
+              </Button>
+            </Tooltip>
+
+            <Tooltip content={`${t("tooltip_history")}${history.length > 0 ? ` (${history.length})` : ""}`} side="left">
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => setHistoryOpen(true)}
+                className="relative h-8 w-8 text-[var(--muted)] hover:text-[var(--foreground)]"
+              >
+                <History size={14} />
+                {history.length > 0 && (
+                  <motion.span
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    className="absolute -top-0.5 -right-0.5 w-3.5 h-3.5 rounded-full text-[8px] font-bold flex items-center justify-center"
+                    style={{ background: "var(--accent)", color: "#fff" }}
+                  >
+                    {history.length > 9 ? "9+" : history.length}
+                  </motion.span>
+                )}
+              </Button>
+            </Tooltip>
           </div>
         </div>
       </div>
     </TooltipProvider>
+  )
+}
+
+// ── Width inline input ────────────────────────────────────────────────────────
+function WidthInput({ value, min, max, onChange }: { value: number; min: number; max: number; onChange: (v: number) => void }) {
+  const [editing, setEditing] = useState(false)
+  const [raw, setRaw] = useState("")
+  const inputRef = useRef<HTMLInputElement>(null)
+
+  const commit = () => {
+    const parsed = parseInt(raw, 10)
+    if (!isNaN(parsed)) {
+      onChange(Math.max(min, Math.min(max, parsed)))
+    }
+    setEditing(false)
+  }
+
+  const startEdit = () => {
+    setRaw(String(Math.round(value)))
+    setEditing(true)
+    setTimeout(() => inputRef.current?.select(), 0)
+  }
+
+  const atMin = Math.round(value) <= min
+  const atMax = Math.round(value) >= max
+
+  if (editing) {
+    return (
+      <div className="ml-auto flex items-center gap-1">
+        <span className="text-[9px] text-[var(--muted)] font-mono">{min}–{max}</span>
+        <input
+          ref={inputRef}
+          value={raw}
+          onChange={(e) => setRaw(e.target.value.replace(/\D/g, ""))}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") commit()
+            if (e.key === "Escape") setEditing(false)
+            if (e.key === "ArrowUp") { e.preventDefault(); setRaw((v) => String(Math.min(max, (parseInt(v, 10) || Math.round(value)) + 1))) }
+            if (e.key === "ArrowDown") { e.preventDefault(); setRaw((v) => String(Math.max(min, (parseInt(v, 10) || Math.round(value)) - 1))) }
+          }}
+          onBlur={commit}
+          className="w-14 text-[10px] font-mono text-right text-[var(--foreground)] bg-[var(--surface-2)] border border-[var(--accent)] rounded px-1.5 py-0.5 focus:outline-none"
+          autoFocus
+        />
+        <span className="text-[10px] font-mono text-[var(--muted)]">px</span>
+      </div>
+    )
+  }
+
+  return (
+    <Tooltip content={`${min}px – ${max}px · click to edit`} side="bottom">
+      <motion.button
+        key={Math.round(value)}
+        initial={{ opacity: 0, scale: 0.85 }}
+        animate={{ opacity: 1, scale: 1 }}
+        onClick={startEdit}
+        className="ml-auto text-[10px] font-mono bg-[var(--surface-2)] hover:bg-[var(--surface-3)] px-1.5 py-0.5 rounded transition-colors cursor-text"
+        style={{ color: atMin || atMax ? "var(--accent)" : "var(--muted)" }}
+      >
+        {Math.round(value)}px
+      </motion.button>
+    </Tooltip>
   )
 }
 
