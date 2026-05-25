@@ -1,0 +1,32 @@
+name: Design System Audit
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Run DS audit
+        env:
+          DSB_URL:       ${{ secrets.DSB_URL }}             # https://your-dsb.vercel.app
+          DSB_CI_TOKEN:  ${{ secrets.DSB_CI_TOKEN }}        # opaque token from /ci-tokens
+          DSB_TOKENS:    ${{ secrets.DSB_TOKENS_JSON }}     # tokens JSON (single line)
+          GH_PAT:        ${{ secrets.DSB_GH_PAT }}          # optional, private repos
+          DSB_USE_AI:    '1'
+        run: |
+          set -euo pipefail
+          # Pin to a release SHA (publish updates as { script.mjs, script.mjs.sha256 } pairs).
+          curl -fsSL "$DSB_URL/scripts/ds-audit.mjs"        -o ds-audit.mjs
+          curl -fsSL "$DSB_URL/scripts/ds-audit.mjs.sha256" -o ds-audit.mjs.sha256
+          # Verify integrity before executing — defeats single-deploy compromise.
+          ( cd . && sha256sum -c ds-audit.mjs.sha256 )
+          node ds-audit.mjs --repo ${{ github.repository }} --branch ${{ github.ref_name }}
