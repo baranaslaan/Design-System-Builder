@@ -2,24 +2,23 @@
 
 import { useState } from "react"
 import { motion } from "framer-motion"
-import { Download, Sparkles, Edit2, Check, History, Search, Undo2, Redo2, Sun, Moon } from "lucide-react"
+import { Download, Sparkles, Edit2, Check, Search, Undo2, Redo2, BarChart3, ShieldCheck, Gauge, Layers, GraduationCap, Box } from "lucide-react"
+import Link from "next/link"
 import { useEffect } from "react"
 import { useTokensStore } from "@/store/tokens"
 import { Button } from "@/components/ui/button"
 import { Tooltip } from "@/components/ui/tooltip"
 import { PresetLoader } from "./PresetLoader"
 import { ExportModal } from "./ExportModal"
-import { HistoryPanel } from "./HistoryPanel"
-import { LanguageToggle } from "@/components/ui/LanguageToggle"
+import { ProfileDropdown } from "@/components/auth/ProfileDropdown"
 import { useT } from "@/lib/i18n"
 
 interface TopbarProps { onSearchOpen?: () => void; onHelpOpen?: () => void }
 
 export function Topbar({ onSearchOpen, onHelpOpen: _onHelpOpen }: TopbarProps) {
   const t = useT()
-  const { tokens, updateName, history, undoStack, redoStack, undo, redo, appTheme, setAppTheme } = useTokensStore()
+  const { tokens, updateName, undoStack, redoStack, undo, redo, appTheme } = useTokensStore()
   const [exportOpen, setExportOpen] = useState(false)
-  const [historyOpen, setHistoryOpen] = useState(false)
   const [editingName, setEditingName] = useState(false)
   const [nameVal, setNameVal] = useState(tokens.name)
 
@@ -46,7 +45,7 @@ export function Topbar({ onSearchOpen, onHelpOpen: _onHelpOpen }: TopbarProps) {
 
   return (
     <>
-      <header className="h-12 flex items-center px-4 gap-3 border-b border-[var(--border)] flex-shrink-0 relative z-20">
+      <header className="h-12 flex items-center px-4 gap-3 border-b border-[var(--border)] flex-shrink-0 relative z-30">
         {/* Logo mark */}
         <div className="flex items-center gap-2.5 mr-1">
           <motion.div
@@ -101,29 +100,6 @@ export function Topbar({ onSearchOpen, onHelpOpen: _onHelpOpen }: TopbarProps) {
 
         {/* Right actions */}
         <div className="ml-auto flex items-center gap-2">
-          {/* Language toggle */}
-          <LanguageToggle />
-
-          {/* App theme toggle */}
-          <Tooltip content={appTheme === "dark" ? t("tooltip_light_mode") : t("tooltip_dark_mode")} side="bottom">
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => setAppTheme(appTheme === "dark" ? "light" : "dark")}
-              className="h-8 w-8"
-              aria-label={appTheme === "dark" ? t("tooltip_light_mode") : t("tooltip_dark_mode")}
-            >
-              <motion.div
-                key={appTheme}
-                initial={{ rotate: -30, opacity: 0 }}
-                animate={{ rotate: 0, opacity: 1 }}
-                transition={{ duration: 0.2 }}
-              >
-                {appTheme === "dark" ? <Sun size={14} /> : <Moon size={14} />}
-              </motion.div>
-            </Button>
-          </Tooltip>
-
           {/* Undo / Redo */}
           <div className="flex items-center gap-0.5">
             <Tooltip content={t("tooltip_undo")} side="bottom">
@@ -154,39 +130,64 @@ export function Topbar({ onSearchOpen, onHelpOpen: _onHelpOpen }: TopbarProps) {
 
           <div className="h-4 w-px bg-[var(--border)]" />
 
-          <PresetLoader />
-
-          <Tooltip content={`${t("tooltip_history")}${history.length > 0 ? ` (${history.length})` : ""}`} side="bottom">
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => setHistoryOpen(true)}
-              className="relative"
-              aria-label={t("tooltip_history")}
-            >
-              <History size={14} />
-              {history.length > 0 && (
-                <motion.span
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  className="absolute -top-0.5 -right-0.5 w-4 h-4 rounded-full text-[9px] font-bold flex items-center justify-center"
-                  style={{ background: "var(--accent)", color: "#fff" }}
-                >
-                  {history.length > 9 ? "9+" : history.length}
-                </motion.span>
-              )}
-            </Button>
+          <Tooltip content="Adoption Analytics" side="bottom">
+            <Link href="/adoption">
+              <Button variant="ghost" size="icon" className="h-8 w-8" aria-label="Adoption Analytics">
+                <BarChart3 size={14} />
+              </Button>
+            </Link>
           </Tooltip>
+          <Tooltip content="Consistency Audit" side="bottom">
+            <Link href="/audit">
+              <Button variant="ghost" size="icon" className="h-8 w-8" aria-label="Consistency Audit">
+                <ShieldCheck size={14} />
+              </Button>
+            </Link>
+          </Tooltip>
+          <Tooltip content="Quality Scoring" side="bottom">
+            <Link href="/scoring">
+              <Button variant="ghost" size="icon" className="h-8 w-8" aria-label="Quality Scoring">
+                <Gauge size={14} />
+              </Button>
+            </Link>
+          </Tooltip>
+          <Tooltip content="Brands" side="bottom">
+            <Link href="/brands">
+              <Button variant="ghost" size="icon" className="h-8 w-8" aria-label="Brands">
+                <Layers size={14} />
+              </Button>
+            </Link>
+          </Tooltip>
+          <Tooltip content="Onboarding" side="bottom">
+            <Link href="/onboarding">
+              <Button variant="ghost" size="icon" className="h-8 w-8" aria-label="Onboarding">
+                <GraduationCap size={14} />
+              </Button>
+            </Link>
+          </Tooltip>
+          <Tooltip content="3D Preview" side="bottom">
+            <Link href="/spatial">
+              <Button variant="ghost" size="icon" className="h-8 w-8" aria-label="3D Preview">
+                <Box size={14} />
+              </Button>
+            </Link>
+          </Tooltip>
+
+          <PresetLoader />
 
           <Button variant="accent" size="sm" onClick={() => setExportOpen(true)} className="gap-1.5">
             <Download size={13} />
             {t("btn_export")}
           </Button>
+
+          <div className="h-4 w-px bg-[var(--border)]" />
+
+          {/* Profile / Auth — far right, avatar only */}
+          <ProfileDropdown />
         </div>
       </header>
 
       <ExportModal open={exportOpen} onClose={() => setExportOpen(false)} />
-      <HistoryPanel open={historyOpen} onClose={() => setHistoryOpen(false)} />
     </>
   )
 }
